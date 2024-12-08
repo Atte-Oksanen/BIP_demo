@@ -114,7 +114,7 @@ const App = () => {
   const [mappingProfiles] = useState<MappingProfile[]>(availableMappingProfiles)
   return (
     <div className="w-screen overflow-x-hidden">
-      <h1 className="p-4 bg-blue-600 font-bold text-white">BIP visual demo</h1>
+      <h1 className="p-4 bg-red-600 font-bold text-white">BIP visual demo</h1>
       <Routes>
         <Route path="" element={<LandingPage apis={availableAPIS} />} />
         <Route path="api/:id" element={<ApiElement mappingProfiles={mappingProfiles} apis={availableApis} />} />
