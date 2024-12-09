@@ -16,6 +16,7 @@ const MappingElement = ({ mappingProfile }: Props) => {
           <tr>
             <th>Input value</th>
             <th>Output value</th>
+            <th>Function</th>
           </tr>
         </thead>
         <tbody>
@@ -24,6 +25,7 @@ const MappingElement = ({ mappingProfile }: Props) => {
               <tr key={index}>
                 <td>{element[0]}</td>
                 <td>{element[1]}</td>
+                <td>{element[2]}</td>
               </tr>)
           })}
         </tbody>

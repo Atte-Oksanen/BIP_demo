@@ -3,6 +3,8 @@ import LandingPage from "./components/LandingPage"
 import ApiElement from "./components/ApiElement"
 import { useState } from "react"
 import { Api, MappingProfile } from "./types/networkingTypes"
+import Header from "./components/Header"
+import MappingEditor from "./components/MappingEditorView"
 
 //TLIFBC092
 const availableAPIS = [
@@ -86,36 +88,36 @@ const availableMappingProfiles: MappingProfile[] = [
     id: '6789',
     name: 'test mapping 3',
     mapping: [
-      ['itemCode', 'SupplierProdNumber'],
-      ['name', 'prodName'],
-      ['gtin', 'ean'],
-      ['attributes.Laatanlasitus', 'lasitus'],
-      ['netPrice.moneyAmount', 'ostohinta']
+      ['itemCode', 'SupplierProdNumber', ''],
+      ['name', 'prodName', ''],
+      ['gtin', 'ean', ''],
+      ['attributes.Laatanlasitus', 'lasitus', ''],
+      ['netPrice.moneyAmount', 'ostohinta', '*100']
 
     ]
   },
   {
     apiId: '4321',
-    id: '5678',
-    name: 'test mapping 2',
+    id: '56789',
+    name: 'test mapping 4',
     mapping: [
-      ['itemCode', 'SupplierProdNumber'],
-      ['name', 'prodName']
+      ['itemCode', 'SupplierProdNumber', ''],
+      ['name', 'prodName', '']
     ]
   }
 ]
-
-
-
-
 
 const App = () => {
   const [availableApis] = useState<Api[]>(availableAPIS)
   const [mappingProfiles] = useState<MappingProfile[]>(availableMappingProfiles)
   return (
-    <div className="w-screen overflow-x-hidden">
-      <h1 className="p-4 bg-red-600 font-bold text-white">BIP visual demo</h1>
+    <div className="w-screen h-svh overflow-hidden">
+      <div>
+        <h1 className="p-4 bg-red-600 font-bold text-white">BIP visual demo</h1>
+        <Header />
+      </div>
       <Routes>
+        <Route path="editor" element={<MappingEditor mappingProfiles={mappingProfiles} apis={availableAPIS} />} />
         <Route path="" element={<LandingPage apis={availableAPIS} />} />
         <Route path="api/:id" element={<ApiElement mappingProfiles={mappingProfiles} apis={availableApis} />} />
       </Routes>
