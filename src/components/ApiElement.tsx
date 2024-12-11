@@ -95,8 +95,8 @@ const ApiElement = ({ apis, mappingProfiles }: Props) => {
   }
 
   return (
-    <div className="p-4 overflow-hidden">
-      <div className="mb-12">
+    <div className="h-full p-4">
+      <div className="h-[80svh] overflow-x-auto overflow-y-auto">
         <div className="my-4">
           <h2 className="mb-8 font-bold">{apiOnShow.name}</h2>
           <button className="empty-button" onClick={handleGetSample}>Get data sample</button>
@@ -127,43 +127,42 @@ const ApiElement = ({ apis, mappingProfiles }: Props) => {
           </PopUp>
         }
 
-      </div>
-      <div>
-        <h3 className="mb-4">Available data maps</h3>
-        <div className="grid grid-cols-2 w-fit gap-2">
-          <DropDownList stateUpdateFunction={setChosenMapping} elements={mappingProfilesOnShow.map(element => { return { elementId: element.id, elementName: element.name, elementDesc: element.mapping.length !== 1 ? `${element.mapping.length} values mapped` : `${element.mapping.length} value mapped` } })} />
-          <button onClick={handleOpenModal} disabled={chosenMapping ? false : true} className="empty-button">Inspect data map</button>
-        </div>
-        {mappingProfilesOnShow && chosenMapping &&
-          <PopUp open={mappingModalOpen} updateModalState={setMappingModalOpen}>
-            <MappingElement mappingProfile={mappingProfilesOnShow.find(element => element.id === chosenMapping) as MappingProfile} />
-          </PopUp>
-        }
-        <button className="my-4 empty-button">Create new mapping</button>
-      </div>
-      {mappedData &&
         <div>
-          <h3>Returned data</h3>
-          <button className="empty-button my-2" onClick={handleDownloadData}>Download in Excel-format</button>
-          <div>
-            <table>
-              <thead>
-                <tr>
-                  {mappedData[0].map((element, index) => <th key={index}>{element}</th>)}
-                </tr>
-              </thead>
-              <tbody>
-                {mappedData.slice(1).map((row, index) => {
-                  return (<tr key={index}>
-                    {row.map((element, subIndex) => <td key={subIndex}>{element}</td>)}
-                  </tr>
-                  )
-                })}
-              </tbody>
-            </table>
+          <h3 className="mb-4">Available data maps</h3>
+          <div className="grid grid-cols-2 w-fit gap-2">
+            <DropDownList stateUpdateFunction={setChosenMapping} elements={mappingProfilesOnShow.map(element => { return { elementId: element.id, elementName: element.name, elementDesc: element.mapping.length !== 1 ? `${element.mapping.length} values mapped` : `${element.mapping.length} value mapped` } })} />
+            <button onClick={handleOpenModal} disabled={chosenMapping ? false : true} className="empty-button">Inspect data map</button>
           </div>
+          {mappingProfilesOnShow && chosenMapping &&
+            <PopUp open={mappingModalOpen} updateModalState={setMappingModalOpen}>
+              <MappingElement mappingProfile={mappingProfilesOnShow.find(element => element.id === chosenMapping) as MappingProfile} />
+            </PopUp>
+          }
         </div>
-      }
+        {mappedData &&
+          <div className="bg-white w-fit h-fit pb-24">
+            <h3>Returned data</h3>
+            <button className="empty-button my-2" onClick={handleDownloadData}>Download in Excel-format</button>
+            <div>
+              <table>
+                <thead>
+                  <tr>
+                    {mappedData[0].map((element, index) => <th key={index}>{element}</th>)}
+                  </tr>
+                </thead>
+                <tbody>
+                  {mappedData.slice(1).map((row, index) => {
+                    return (<tr key={index}>
+                      {row.map((element, subIndex) => <td key={subIndex}>{element}</td>)}
+                    </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        }
+      </div>
       <div className=" p-3 flex justify-end content-center fixed bottom-0 left-0 z-50 w-full h-16 bg-white border-t-2">
         <button disabled={chosenMapping ? false : true} className="filled-button" onClick={handleGetData}>Get mapped data</button>
       </div>
