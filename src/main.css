@@ -38,7 +38,7 @@
   }
 
   .api-button {
-    @apply p-2 border bg-white shadow-black border-gray-300 duration-150 rounded-md h-[20svh] w-[20svh]  hover:drop-shadow-lg
+    @apply m-2 p-2 border bg-white shadow-black border-gray-300 duration-150 rounded-md h-44 w-44  hover:drop-shadow-lg
   }
 
   .mapping-button{

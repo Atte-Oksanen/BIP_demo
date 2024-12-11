@@ -7,7 +7,7 @@ interface Props {
 
 const MappingEditor = ({ mappingProfile }: Props) => {
   const [mappingValues, setMappingValues] = useState<string[][]>()
-
+  const [editingMode, setEditingMode] = useState<boolean>(false)
   useEffect(() => {
     if (mappingProfile) {
       setMappingValues(mappingProfile.mapping)
@@ -18,31 +18,37 @@ const MappingEditor = ({ mappingProfile }: Props) => {
     return
   }
 
+  const handleEdit = () => {
+    setEditingMode(!editingMode)
+  }
+
   return (
-    <div className="m-4">
+    <div className="m-4 mr-8">
       <div>
         <h2 className="inline-block mr-4">
           {mappingProfile.name}
         </h2>
-        <button className="filled-button mr-4">Edit</button>
+        <button onClick={handleEdit} className="filled-button mr-4">{editingMode ? "Save changes" : "Edit"}</button>
         <button className="empty-button">Test mapping</button>
       </div>
-      <div className="w-[60%]">
+      <div className="my-12">
         <h3>Mapped values</h3>
-        <div className="grid grid-cols-3 gap-6">
+        <div className="grid grid-cols-4 gap-6">
           <h4>Input field</h4>
           <h4>Output field</h4>
           <h4>Function</h4>
+          <h4>Result</h4>
+          {mappingValues.map(element => {
+            return (
+              <>
+                <input disabled={!editingMode} className="text-box" value={element[0]} type="text" />
+                <input disabled={!editingMode} className="text-box" value={element[1]} type="text" />
+                <input disabled={!editingMode} className="text-box" value={element[2]} type="text" />
+                <input disabled={!editingMode} className="text-box" type="text" value={''} />
+              </>
+            )
+          })}
         </div>
-        {mappingValues.map(element => {
-          return (
-            <div className="grid grid-cols-3 gap-6 my-2">
-              <input disabled={true} className="text-box mr-2" value={element[0]} type="text" />
-              <input disabled={true} className="text-box" value={element[1]} type="text" />
-              <input disabled={true} className="text-box" value={element[2]} type="text" />
-            </div>
-          )
-        })}
       </div>
     </div>
   )

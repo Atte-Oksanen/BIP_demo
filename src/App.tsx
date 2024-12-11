@@ -14,55 +14,11 @@ const availableAPIS = [
     id: '1234'
   },
   {
-    name: 'test API 2',
-    address: 'https://www.laattapiste.fi/api/v1.0/product/',
-    id: '4321'
-  },
-  {
-    name: 'test API 2',
-    address: 'https://www.laattapiste.fi/api/v1.0/product/',
-    id: '4321'
-  },
-  {
-    name: 'test API 2',
-    address: 'https://www.laattapiste.fi/api/v1.0/product/',
-    id: '4321'
-  },
-  {
-    name: 'test API 2',
-    address: 'https://www.laattapiste.fi/api/v1.0/product/',
-    id: '4321'
-  },
-  {
-    name: 'test API 2',
-    address: 'https://www.laattapiste.fi/api/v1.0/product/',
-    id: '4321'
-  },
-  {
-    name: 'test API 2',
-    address: 'https://www.laattapiste.fi/api/v1.0/product/',
-    id: '4321'
-  },
-  {
-    name: 'test API 2',
-    address: 'https://www.laattapiste.fi/api/v1.0/product/',
-    id: '4321'
-  },
-  {
-    name: 'test API 2',
-    address: 'https://www.laattapiste.fi/api/v1.0/product/',
-    id: '4321'
-  },
-  {
     name: 'Really long name for an api',
     address: 'https://www.laattapiste.fi/api/v1.0/product/',
-    id: '4321'
+    id: '156764'
   },
-  {
-    name: 'test API 2',
-    address: 'https://www.laattapiste.fi/api/v1.0/product/',
-    id: '4321'
-  },
+
 ]
 
 const availableMappingProfiles: MappingProfile[] = [
@@ -100,6 +56,15 @@ const availableMappingProfiles: MappingProfile[] = [
     apiId: '4321',
     id: '56789',
     name: 'test mapping 4',
+    mapping: [
+      ['itemCode', 'SupplierProdNumber', ''],
+      ['name', 'prodName', '']
+    ]
+  },
+  {
+    apiId: '156764',
+    id: '13456565',
+    name: 'test mapping for long api',
     mapping: [
       ['itemCode', 'SupplierProdNumber', ''],
       ['name', 'prodName', '']

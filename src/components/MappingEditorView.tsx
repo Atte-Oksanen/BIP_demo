@@ -22,7 +22,7 @@ const MappingEditorView = ({ mappingProfiles, apis }: Props) => {
   }
 
   return (
-    <div className="h-full grid grid-cols-[20svw_auto]">
+    <div className="h-full grid grid-cols-[22rem_auto]">
       <div className="pr-8 border-r">
         <div>
           <h2 className="m-4 mb-0 inline-block">Mappings</h2>
@@ -41,7 +41,7 @@ const MappingEditorView = ({ mappingProfiles, apis }: Props) => {
                   </div>
                   {mappingProfiles.filter(mappingElement => element.id === mappingElement.apiId).map(mappingElement => {
                     return (
-                      <div className={`${mappingElement.id === chosenMapping ? 'bg-gray-100 border-red-600' : 'hover:border-gray-100 border-white'} border-b-2 p-1 duration-150 indent-6 cursor-pointer hover:bg-gray-100`} id={mappingElement.id} onClick={handleChooseMapping}>{mappingElement.name}</div>
+                      <div className={`${mappingElement.id === chosenMapping ? 'bg-gray-100 border-red-600' : 'hover:border-gray-100 border-white'} border-l-4 p-1 duration-150 indent-6 cursor-pointer hover:bg-gray-100`} id={mappingElement.id} onClick={handleChooseMapping}>{mappingElement.name}</div>
                     )
                   })}
                 </div>
@@ -50,7 +50,7 @@ const MappingEditorView = ({ mappingProfiles, apis }: Props) => {
           })}
           {searchTerm !== '' && mappingProfiles.filter(element => element.name.includes(searchTerm)).map(element => {
             return (
-              <div id={element.id} onClick={handleChooseMapping} className={`${element.id === chosenMapping ? 'bg-gray-100 border-red-600' : 'border-gray-100'} border-b-2 p-1 duration-150 indent-6 cursor-pointer hover:bg-gray-100`}>
+              <div id={element.id} onClick={handleChooseMapping} className={`${element.id === chosenMapping ? 'bg-gray-100 border-red-600' : 'border-gray-100'} border-l-4 p-1 duration-150 indent-6 cursor-pointer hover:bg-gray-100`}>
                 <div>
                   {element.name}
                 </div>
