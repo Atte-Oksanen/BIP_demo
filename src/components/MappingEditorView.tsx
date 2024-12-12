@@ -22,8 +22,8 @@ const MappingEditorView = ({ mappingProfiles, apis }: Props) => {
   }
 
   return (
-    <div className="h-full grid grid-cols-[22rem_auto]">
-      <div className="pr-8 border-r">
+    <div className="h-full m-4 overflow-hidden grid grid-cols-[24rem_auto]">
+      <div className="pr-12 border-r h-full overflow-hidden">
         <div>
           <h2 className="m-4 mb-0 inline-block">Mappings</h2>
           <button className="filled-button">Create new</button>
@@ -63,9 +63,11 @@ const MappingEditorView = ({ mappingProfiles, apis }: Props) => {
           }
         </div>
       </div>
-      {chosenMapping &&
-        <MappingEditor mappingProfile={mappingProfiles.find(element => element.id === chosenMapping)} />
-      }
+      <div className="h-full overflow-auto">
+        {chosenMapping &&
+          <MappingEditor api={apis.find(apiElement => mappingProfiles.find(element => element.id === chosenMapping)?.apiId === apiElement.id)} mappingProfile={mappingProfiles.find(element => element.id === chosenMapping)} />
+        }
+      </div>
     </div>
   )
 }

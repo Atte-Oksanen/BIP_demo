@@ -48,7 +48,9 @@ const availableMappingProfiles: MappingProfile[] = [
       ['name', 'prodName', ''],
       ['gtin', 'ean', ''],
       ['attributes.Laatanlasitus', 'lasitus', ''],
-      ['netPrice.moneyAmount', 'ostohinta', '*100']
+      ['attributes.Tuotekuvaus', 'PIM tuotekuvaus', ''],
+      ['netPrice.moneyAmount', 'ostohinta', '*100'],
+      ['attributes.Varinlisatiedot', 'Väritiedot', '']
 
     ]
   },
@@ -76,16 +78,20 @@ const App = () => {
   const [availableApis] = useState<Api[]>(availableAPIS)
   const [mappingProfiles] = useState<MappingProfile[]>(availableMappingProfiles)
   return (
-    <div className="w-screen h-svh overflow-hidden">
-      <div>
-        <h1 className="p-4 bg-red-600 font-bold text-white">BIP visual demo</h1>
-        <Header />
+    <div className="w-svw h-svh overflow-hidden">
+      <div className="h-full flex flex-col">
+        <div>
+          <h1 className="p-4 bg-red-600 font-bold text-white">BIP visual demo</h1>
+          <Header />
+        </div>
+        <div className="h-full overflow-hidden">
+          <Routes>
+            <Route path="editor" element={<MappingEditor mappingProfiles={mappingProfiles} apis={availableAPIS} />} />
+            <Route path="" element={<LandingPage apis={availableAPIS} />} />
+            <Route path="api/:id" element={<ApiElement mappingProfiles={mappingProfiles} apis={availableApis} />} />
+          </Routes>
+        </div>
       </div>
-      <Routes>
-        <Route path="editor" element={<MappingEditor mappingProfiles={mappingProfiles} apis={availableAPIS} />} />
-        <Route path="" element={<LandingPage apis={availableAPIS} />} />
-        <Route path="api/:id" element={<ApiElement mappingProfiles={mappingProfiles} apis={availableApis} />} />
-      </Routes>
     </div>
   )
 }

@@ -1,4 +1,3 @@
-import { MappingProfile } from "../types/networkingTypes"
 
 interface Data {
   [key: string]: string | undefined | null | WildCardObject
@@ -8,7 +7,7 @@ interface WildCardObject {
   [key: string]: string | undefined | null
 }
 
-export const mapData = (data: Data | Data[], mappingProfile: MappingProfile) => {
+export const mapData = (data: Data | Data[], mappingValues: string[][]) => {
   if (!(data instanceof Array)) {
     data = [data]
   }
@@ -16,7 +15,7 @@ export const mapData = (data: Data | Data[], mappingProfile: MappingProfile) => 
   const formattedData: Map<string, string[]> = new Map()
   for (const array of flattenedArrays) {
     const arrayKeys = array.map(element => element[0])
-    for (const lookUpKey of mappingProfile.mapping) {
+    for (const lookUpKey of mappingValues) {
 
       if (arrayKeys.includes(lookUpKey[0])) {
         if (formattedData.has(lookUpKey[1])) {

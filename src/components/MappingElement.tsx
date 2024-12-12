@@ -10,26 +10,28 @@ const MappingElement = ({ mappingProfile }: Props) => {
       <h3>
         {mappingProfile.name}
       </h3>
-      <h4>Mapping</h4>
-      <table>
-        <thead>
-          <tr>
-            <th>Input value</th>
-            <th>Output value</th>
-            <th>Function</th>
-          </tr>
-        </thead>
-        <tbody>
-          {mappingProfile.mapping.map((element, index) => {
-            return (
-              <tr key={index}>
-                <td>{element[0]}</td>
-                <td>{element[1]}</td>
-                <td>{element[2]}</td>
-              </tr>)
-          })}
-        </tbody>
-      </table>
+      <div>
+        <h4>Mapping</h4>
+        <table>
+          <thead>
+            <tr>
+              <th>Input value</th>
+              <th>Output value</th>
+              <th>Function</th>
+            </tr>
+          </thead>
+          <tbody>
+            {mappingProfile.mapping.map((element, index) => {
+              return (
+                <tr key={index}>
+                  <td>{element[0]}</td>
+                  <td>{element[1]}</td>
+                  <td>{element[2]}</td>
+                </tr>)
+            })}
+          </tbody>
+        </table>
+      </div>
     </div>
 
   )

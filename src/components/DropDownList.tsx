@@ -29,7 +29,10 @@ const DropDownList = ({ elements, stateUpdateFunction }: Props) => {
 
   return (
     <div className="w-fit min-w-60">
-      <div onClick={handleShowList} className={`cursor-pointer border border-black ${showList ? 'rounded-t-md border-b-gray-100' : 'rounded-md '} py-2 px-2 `}>{chosenElement}</div>
+      <div onClick={handleShowList} className={`flex justify-between items-center cursor-pointer border border-black ${showList ? 'rounded-t-md border-b-gray-100' : 'rounded-md '} py-2 px-2 `}>
+        <div >{chosenElement}</div>
+        <svg xmlns="http://www.w3.org/2000/svg" className={`${showList ? 'rotate-180' : '1'} duration-300`} height="2rem" viewBox="0 -960 960 960" width="2rem" fill="#b91c1c"><path d="M480-360 280-560h400L480-360Z" /></svg>
+      </div>
       {showList &&
         <ul className="absolute z-50 rounded-b-md drop-shadow-lg w-60 bg-white h-fit max-h-[60vh] overflow-y-auto border border-black border-t-0">
           {elements.map((element, index) => {

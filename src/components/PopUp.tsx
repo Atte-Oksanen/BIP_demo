@@ -20,9 +20,9 @@ const PopUp = ({ children, open, updateModalState }: React.PropsWithChildren<Pro
   }
 
   return (
-    <dialog className="max-w-[80svw] w-fit rounded-md max-h-[80svh] overflow-y-auto" ref={modalRef}>
-      <div className="border border-black rounded-md">
-        <div className="p-4">
+    <dialog className="max-w-[80svw] w-fit rounded-md h-[80svh]" ref={modalRef}>
+      <div className="h-full border border-black rounded-md overflow-hidden flex flex-col">
+        <div className="p-4 h-full overflow-auto">
           {children}
         </div>
         <div className="flex justify-end border-t border-black p-4">
