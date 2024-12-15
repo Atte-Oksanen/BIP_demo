@@ -34,14 +34,14 @@ const MappingEditorView = ({ mappingProfiles, apis }: Props) => {
         <div className="ml-4 border-2 rounded-md w-full overflow-y-auto max-h-[65svh]">
           {searchTerm === '' && apis.map(element => {
             return (
-              <div className="border-b">
+              <div key={element.id} className="border-b">
                 <div>
                   <div className="p-2 font-semibold">
                     {element.name}
                   </div>
-                  {mappingProfiles.filter(mappingElement => element.id === mappingElement.apiId).map(mappingElement => {
+                  {mappingProfiles.filter(mappingElement => element.id === mappingElement.apiId).map((mappingElement, index) => {
                     return (
-                      <div className={`${mappingElement.id === chosenMapping ? 'bg-gray-100 border-red-600' : 'hover:border-gray-100 border-white'} border-l-4 p-1 duration-150 indent-6 cursor-pointer hover:bg-gray-100`} id={mappingElement.id} onClick={handleChooseMapping}>{mappingElement.name}</div>
+                      <div key={index} className={`${mappingElement.id === chosenMapping ? 'bg-gray-100 border-red-600' : 'hover:border-gray-100 border-white'} border-l-4 p-1 duration-150 indent-6 cursor-pointer hover:bg-gray-100`} id={mappingElement.id} onClick={handleChooseMapping}>{mappingElement.name}</div>
                     )
                   })}
                 </div>

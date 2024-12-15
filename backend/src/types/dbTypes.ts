@@ -4,12 +4,9 @@ export interface Api {
   id: string
 }
 
-
 export interface MappingProfile {
   id: string,
   apiId: string,
   name: string,
   mapping: string[][]
 }
-
-

@@ -7,6 +7,8 @@ import writeXlsxFile from "write-excel-file"
 import DropDownList from "./DropDownList"
 import PopUp from "./PopUp"
 import MappingElement from "./MappingElement"
+import LoadingComponent from "./utils/LoadingComponent"
+import MultipleChoise from "./MultipleChoise"
 
 interface Props {
   apis: Api[]
@@ -20,6 +22,10 @@ const ApiElement = ({ apis, mappingProfiles }: Props) => {
   const [chosenMapping, setChosenMapping] = useState<string>()
   const [mappedData, setMappedData] = useState<string[][]>()
   const [mappingModalOpen, setMappingModalOpen] = useState<boolean>(false)
+  const [showLoadingIcon, setShowLoadingIcon] = useState<boolean>(false)
+  const [searchParameters, setSearchParameters] = useState<string[]>([''])
+  const [showParamPopUp, setShowParamPopUp] = useState<boolean>(false)
+  const [dataErrorCount, setErrorCount] = useState<number>(0)
 
   useEffect(() => {
     const id = params.id
@@ -33,17 +39,24 @@ const ApiElement = ({ apis, mappingProfiles }: Props) => {
     setMappedData(undefined)
   }, [chosenMapping])
 
-
   if (!apiOnShow || !mappingProfilesOnShow) {
     return null
   }
 
   const handleGetData = async (event: React.MouseEvent<HTMLElement>) => {
     if (chosenMapping) {
+      setShowLoadingIcon(true)
+      setMappedData(undefined)
       event.stopPropagation()
-      const data = await getData(apiOnShow)
-      const mappedData = mapData(data, mappingProfilesOnShow.find(element => element.id === chosenMapping)?.mapping as string[][])
-      setMappedData(mappedData)
+      const data = await getData(apiOnShow.id, searchParameters)
+      if (data.errorCount && data.errorCount > 0) {
+        setErrorCount(data.errorCount)
+      }
+      if (data.data) {
+        const mappedData = mapData(data.data, mappingProfilesOnShow.find(element => element.id === chosenMapping)?.mapping as string[][])
+        setMappedData(mappedData)
+        setShowLoadingIcon(false)
+      }
     }
   }
 
@@ -55,6 +68,10 @@ const ApiElement = ({ apis, mappingProfiles }: Props) => {
       }
       await writeXlsxFile(formattedData, { fileName: `${apiOnShow.name}_${new Date().toLocaleDateString('en-GB')}_${new Date().toLocaleTimeString('en-GB')}.xlsx` })
     }
+  }
+
+  const handleOpenParamModal = () => {
+    setShowParamPopUp(true)
   }
 
 
@@ -69,11 +86,24 @@ const ApiElement = ({ apis, mappingProfiles }: Props) => {
           <h2 className="mb-8">{apiOnShow.name}</h2>
         </div>
         <div>
-          <h3 className="mb-4">Available data maps</h3>
           <div className="w-fit">
-            <DropDownList stateUpdateFunction={setChosenMapping} elements={mappingProfilesOnShow.map(element => { return { elementId: element.id, elementName: element.name, elementDesc: element.mapping.length !== 1 ? `${element.mapping.length} values mapped` : `${element.mapping.length} value mapped` } })} />
-            <button onClick={handleOpenModal} disabled={chosenMapping ? false : true} className="empty-button block my-4">Inspect data map</button>
-            <button disabled={chosenMapping ? false : true} className="filled-button" onClick={handleGetData}>Get mapped data</button>
+            <div className="mb-8">
+              <h3 className="mb-2">Available data maps</h3>
+              <DropDownList stateUpdateFunction={setChosenMapping} elements={mappingProfilesOnShow.map(element => { return { elementId: element.id, elementName: element.name, elementDesc: element.mapping.length !== 1 ? `${element.mapping.length} values mapped` : `${element.mapping.length} value mapped` } })} />
+              <button onClick={handleOpenModal} disabled={chosenMapping ? false : true} className="empty-button block my-2">Inspect data map</button>
+            </div>
+            <div className="mb-8">
+              <h3 className="mb-2">Search parameters</h3>
+              <button disabled={!chosenMapping} onClick={handleOpenParamModal} className="filled-button">Add search parameters</button>
+              <h5 className={`text-sm ${!chosenMapping ? 'text-gray-400' : 'text-gray-800'}`}>{searchParameters.filter(element => element.length !== 0).length} parameters chosen</h5>
+            </div>
+            <PopUp open={showParamPopUp} updateModalState={setShowParamPopUp} >
+              <div>
+                <h3>Search parameters</h3>
+                <MultipleChoise values={searchParameters} setValues={setSearchParameters} />
+              </div>
+            </PopUp>
+            <button disabled={searchParameters[0] === ''} className="filled-button" onClick={handleGetData}>Get mapped data</button>
           </div>
           {mappingProfilesOnShow && chosenMapping &&
             <PopUp open={mappingModalOpen} updateModalState={setMappingModalOpen}>
@@ -86,10 +116,16 @@ const ApiElement = ({ apis, mappingProfiles }: Props) => {
         <div className="p-4 h-26 border-b pb-4">
           <h2 className="inline-block mr-4">Returned data</h2>
           <button disabled={!mappedData} className="empty-button my-2" onClick={handleDownloadData}>Download Excel</button>
-          {mappedData && mappedData[0].length > 5 &&
-            <div className="text-sm">Large result set. Only first 5 columns shown. Please download file to see full result.</div>
+          {mappedData &&
+            <div className="text-sm">
+              {dataErrorCount && dataErrorCount > 0 ? `Could not get data for ${dataErrorCount} items. ` : ''}
+              {mappedData[0].length > 5 ? 'Large result set. Only first 5 columns shown. Please download file to see full result.' : ''}
+            </div>
           }
         </div>
+        {showLoadingIcon &&
+          <LoadingComponent />
+        }
         {mappedData &&
           <>
             <div className="overflow-auto h-full">
