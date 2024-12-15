@@ -41,7 +41,7 @@ const MappingEditor = ({ mappingProfile, api }: Props) => {
   const handleGetData = async (event: React.MouseEvent<HTMLElement>) => {
     if (mappingValues && api) {
       event.stopPropagation()
-      const data = await getData(api)
+      const data = await getData(api.address, ['TLIGWF056'])
       const mappedData = mapData(data, mappingValues)
       setMappedData(mappedData)
     }
