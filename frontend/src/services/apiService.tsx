@@ -1,7 +1,16 @@
 import axios from "axios"
 import { Api } from "../types/networkingTypes"
 
-const BASE_URL = 'http://localhost:3001/apis'
+let BASE_URL = ''
+
+if (process.env.NODE_ENV === 'development') {
+  BASE_URL = 'http://localhost:3001'
+} else {
+  BASE_URL = 'https://bip-demo-3wy6.onrender.com'
+}
+
+BASE_URL = BASE_URL + '/apis'
+
 
 
 export const getData = async (apiId: string, parameters: string[]) => {
